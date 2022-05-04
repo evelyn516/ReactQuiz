@@ -8,6 +8,18 @@ class userScore {
     this.frequency = data.frequency;
   }
 
+  static get all(){
+    return new Promise(async (res,rej) => {
+      try {
+        const result = await db.query(`SELECT * FROM userScore ORDER BY score DESC limit 10`)
+        const topScore = result.rows.map(a => new userScore(a));
+        resolve(topScore);
+      } catch {
+        rej(`Error retrieving score`)
+      }
+    })
+  }
+
 
   static newQuiz(data) {
     return new Promise(async (res, rej) => {
@@ -21,8 +33,8 @@ class userScore {
             frequency,
           ]
         );
-        let score = new userScore(result.rows[0]);
-        res(score);
+        let quiz = new userScore(result.rows[0]);
+        res(quiz);
       } catch (err) {
         rej("Error logging score!");
       }
@@ -55,13 +67,15 @@ class userScore {
                 res('Cannot update')
             } else {
                 const increaseFrequency = await db.query(`UPDATE userScore SET frequency = frequency+1 WHERE username =$1`,[username])
+                const increaseScore = await db.query(`UPDATE userScore SET score = `)
                 res('Quiz count increased')
-            }
+            } 
         }
         catch(err){
             rej("Failed to update database")
         }
     })
+  }
 }
 
 module.exports = userScore;

@@ -2,9 +2,20 @@ const express = require("express");
 const router = express.Router();
 const userScoreController = require("../controllers/userScore");
 
-router.get("/username", )
+// getting all 
+router.get("/", userScoreController.getAllScore)
+// router.get('/', (req, res) => {
+//     res.send('Hello, WOrld')
+// })
+
+// creating one 
 router.post("/", userScoreController.newQuiz);
-router.get("/:usename", userScoreController.findByUsername);
-router.patch("/entry/:id", userScoreController.updateScore)
+
+
+// getting one
+router.get("/entry/:username", userScoreController.findByUsername);
+
+// updating one
+// router.patch("/entry/:id", userScoreController.updateScore)
 
 module.exports = router;

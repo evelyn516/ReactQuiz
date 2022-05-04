@@ -1,10 +1,20 @@
 const UserScore = require('../models/userScore');
 
+
+const getAllScore = async (req,res) => {
+  try {
+    const UserScore = await UserScore.all
+    res.status(200).json(UserScore);
+  } catch (err){
+    res.status(500).json({msg: "Could not get scores"})
+  }
+}
+
 const newQuiz = async (req,res) => {
   try {
    console.log('new quiz function called')
    const score = await UserScore.newQuiz(req.body);
-   console.log(score);
+   res.status(201).json(score);
   } catch (err) {
     res.status(500).json({ msg: "Quiz could not be created!" });
   };
@@ -22,7 +32,7 @@ const findByUsername = async (req,res) => {
 
 const updateScore = async (req,res) => {
   try {
-    const score = await UserScore.updateScore(req.params.id);
+    const score = await UserScore.updateScore(req.params.username);
     console.log(result)
     res.status(200).send(score);
    } catch (err) {
@@ -31,6 +41,7 @@ const updateScore = async (req,res) => {
  };
 
  module.exports = {
+  getAllScore,
   newQuiz,
   findByUsername,
   updateScore,

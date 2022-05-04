@@ -1,0 +1,8 @@
+GET http://localhost:4004/users
+
+###
+POST http://localhost:4004/users
+
+
+###
+Get http://localhost:4004/username

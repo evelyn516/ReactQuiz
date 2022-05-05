@@ -13,7 +13,7 @@ router.post("/", userScoreController.newQuiz);
 
 
 // getting one
-router.get("/entry/:username", userScoreController.findByUsername);
+router.get("/:username", userScoreController.findByUsername);
 
 // updating one
 // router.patch("/entry/:id", userScoreController.updateScore)

@@ -13,7 +13,7 @@ class userScore {
       try {
         const result = await db.query(`SELECT * FROM userScore ORDER BY score DESC limit 10`)
         const topScore = result.rows.map(a => new userScore(a));
-        resolve(topScore);
+        res(topScore);
       } catch {
         rej(`Error retrieving score`)
       }
@@ -48,7 +48,7 @@ class userScore {
             let result = await db.query(`SELECT * FROM userScore WHERE username = $1 ORDER BY username DESC;`, [
                 username,
             ]);
-            let userScore = result.rows;
+            let userScore = result.rows[0];
             res(userScore);
           } catch (err) {
             rej("Could not receive this user's scores");
@@ -56,20 +56,16 @@ class userScore {
         });
   }
 
-  static updateScore(data) {
+   updateScore(data) {
     return new Promise(async (res, rej) => {
         try {
+            const { score, frequency } = data;
             console.log('Method called')
-            const findQuiz = await userScore.findByUsername(username)
-            console.log(findQuiz)
-
-            if(findQuiz.frequency === findQuiz.frequency){
-                res('Cannot update')
-            } else {
-                const increaseFrequency = await db.query(`UPDATE userScore SET frequency = frequency+1 WHERE username =$1`,[username])
-                const increaseScore = await db.query(`UPDATE userScore SET score = `)
-                res('Quiz count increased')
-            } 
+            const findUserDetail = await userScore.findByUsername(data)
+            console.log(findUserDetail)
+            const increaseFrequency = await db.query(`UPDATE userScore SET frequency = frequency+ $2 WHERE username =$1`,[findUserDetail, frequency]) 
+            const increaseScore = await db.query(`UPDATE userScore SET score = score + $1 WHERE username = $2`, [score, findUserDetail])
+            res('Quiz count increased')
         }
         catch(err){
             rej("Failed to update database")

@@ -1,16 +1,17 @@
-import {screen} from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import Header from '.';
 import NavBar from './Index';
 
-describe('NavBar', () => {
-	beforeEach(() => {render(<NavBar />)})
-	
-	it ('The h1 contains Zoomie', ( ) => {
-		const navbar = screen.getByRole('NavBar');
-        expect(navbar.)//to contain h1
-		expect(navbar.textContent).toBe("Zoomie");  
-	});
+test('render about link', () => {
+    render(<NavBar />);
+    expect(screen.getByText("Zoomie")).toBeInTheDocument();
+  })
 
-});
-
-
-
+describe('Header', () => {
+    test('it renders a nav tag', () => {
+        render(<Header />, { wrapper: MemoryRouter });
+        const nav = screen.queryByRole('NavBar');
+        expect(nav).toBeInTheDocument();
+    })
+})

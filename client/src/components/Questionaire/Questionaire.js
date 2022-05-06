@@ -89,7 +89,7 @@ function Questionaire() {
 
   if (!question) {
     return (
-      <h1>
+      <h1 role='trackScore'>
         {username} your score was: {score}
       </h1>
     );

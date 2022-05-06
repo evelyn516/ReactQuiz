@@ -20,7 +20,6 @@ describe('Home', () => {
         const leaderboardButton = screen.getByRole('leaderboard')
         expect(leaderboardButton.textContent).toContain('Leaderboards');
     });
-
 });
 
 

@@ -14,6 +14,8 @@ function FetchButton() {
     (state) => state.options.amount_of_questions
   );
   const questionType = useSelector((state) => state.options.question_type);
+
+
   const dispatch = useDispatch();
   const setLoading = (value) => {
     dispatch({
@@ -47,7 +49,6 @@ function FetchButton() {
     await fetch(apiUrl)
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         setQuestions(response.results);
         setLoading(false);
       });

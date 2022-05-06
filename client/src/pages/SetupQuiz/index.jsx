@@ -15,27 +15,9 @@ function SetupQuiz() {
     (state) => state.options.amount_of_questions
   );
   const questionType = useSelector((state) => state.options.question_type);
+  const rangeSlider = document.querySelector(".slider");
 
   const dispatch = useDispatch();
-
-  const refreshSettings = () => {
-    dispatch({
-      type: "SET_QUESTIONS",
-      questions: [],
-    });
-    dispatch({
-      type: "SET_SCORE",
-      score: 0,
-    });
-    dispatch({
-      type: "CHANGED_USERNAME",
-      username: "",
-    });
-  };
-  //useEffect hook with fetch of the categories from the API endpoint
-  useEffect(() => {
-    refreshSettings();
-  }, []);
 
   useEffect(() => {
     const apiUrl = "https://opentdb.com/api_category.php";
@@ -59,6 +41,7 @@ function SetupQuiz() {
   //functions to handle the events and update the state
   const handleUserNameChoice = (event) => {
     const lowerUsername = event.target.value.toLowerCase();
+
     const fixedUsername = lowerUsername.replace(
       lowerUsername[0],
       lowerUsername[0].toUpperCase()
@@ -107,12 +90,19 @@ function SetupQuiz() {
 
   function getSliderValue(e) {
     const rangeValue = document.querySelector(".slider").value;
+    const sliderTitle = document.querySelector(".demo");
     if (rangeValue === "1") {
-      document.querySelector(".demo").textContent = "Easy";
+      sliderTitle.textContent = "Easy";
+      sliderTitle.classList.add("easy");
+      sliderTitle.classList.remove("medium");
+      sliderTitle.classList.remove("hard");
     } else if (rangeValue === "2") {
-      document.querySelector(".demo").textContent = "Medium";
+      sliderTitle.textContent = "Medium";
+      sliderTitle.classList.add("medium");
+      sliderTitle.classList.remove("hard");
     } else if (rangeValue === "3") {
-      document.querySelector(".demo").textContent = "Hard";
+      sliderTitle.textContent = "Hard";
+      sliderTitle.classList.add("hard");
     }
     handleDifficultyChange(e);
   }
@@ -244,7 +234,6 @@ function SetupQuiz() {
 
         <div className="setquiz-buttons">
           <FetchButton />
-          <button>Start multiple players Quiz</button>
         </div>
       </div>
     );

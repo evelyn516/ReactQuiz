@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./FetchButton.css";
 
-function FetchButton(props) {
+function FetchButton() {
   const questionCategory = useSelector(
     (state) => state.options.question_category
   );

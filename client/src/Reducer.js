@@ -77,8 +77,10 @@ const Reducer = (state = initState, action) => {
     case "SET_SCORE":
       return {
         ...state,
-        score: action.score
-      }
+        score: action.score,
+      };
+    case "NEW_QUIZ":
+      return initState;
     default:
       return state;
   }
